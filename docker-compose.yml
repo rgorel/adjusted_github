@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  base: &base
+    build: .
+    ports:
+      - '3000:3000'
+    volumes:
+      - adjusted_github_gems:/usr/local/bundle
+      - .:/app
+    env_file: .env
+
+  app:
+    <<: *base
+    command: ['./bin/start']
+
+volumes:
+  adjusted_github_gems:
