@@ -1,1 +1,30 @@
-<b>test</b>
+<form action="<%= url('/') %>">
+  <div class="input-group mb-3">
+    <input type="text" class="form-control" name="search" placeholder="search for repository" value="<%= params['search'] %>">
+
+    <div class="input-group-append">
+      <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button>
+    </div>
+  </div>
+</form>
+
+<% if params['search'] %>
+  <p>total results: <%= result.total_count %></p>
+<% end %>
+
+<ul class="list-group">
+<% result.items.each do |result| %>
+  <li class="list-group-item">
+    <p> <a href="<%= result.url %>"><%= result.name %></a> </p>
+    <p><%= result.description %></p>
+  </li>
+<% end %>
+</ul>
+
+<% result.previous_page&.then do |page| %>
+  <a href="<%= url("/?search=#{encoded_param('search')}&page=#{page}") %>" class="btn btn-lg btn-primary my-5 float-left">previous page</a>
+<% end %>
+
+<% result.next_page&.then do |page| %>
+  <a href="<%= url("/?search=#{encoded_param('search')}&page=#{page}") %>" class="btn btn-lg btn-primary my-5 float-right">next page</a>
+<% end %>
