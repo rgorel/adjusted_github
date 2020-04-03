@@ -14,5 +14,9 @@ services:
     <<: *base
     command: ['./bin/start']
 
+  tests:
+    <<: *base
+    command: ['./bin/tests']
+
 volumes:
   adjusted_github_gems:
