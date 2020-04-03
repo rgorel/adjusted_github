@@ -5,10 +5,13 @@ require_relative 'lib/github_repos'
 class AdjustedGithubApp < Sinatra::Application
   set :results_per_page, 30
 
+  set :github_client_id, ENV.fetch('GITHUB_CLIENT_ID')
+  set :github_client_secret, ENV.fetch('GITHUB_CLIENT_SECRET')
+
   def self.github_repos
     @github_repos ||= GithubRepos.new(
-      client_id: ENV.fetch('GITHUB_CLIENT_ID'),
-      client_secret: ENV.fetch('GITHUB_CLIENT_SECRET')
+      client_id: github_client_id,
+      client_secret: github_client_secret
     )
   end
 
